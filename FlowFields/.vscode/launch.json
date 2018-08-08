@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "al",
+            "request": "launch",
+            "name": "Your own server",
+            "server": "http://c63405985172",
+            "serverInstance": "nav",
+            "authentication": "UserPassword",
+            "startupObjectId": 50110,
+            "schemaUpdateMode": "Synchronize"
+            //"schemaUpdateMode": "Recreate"
+        }
+    ]
+}
