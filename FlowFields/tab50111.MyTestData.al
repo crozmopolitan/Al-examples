@@ -9,8 +9,10 @@ table 50111 MyTestData
         field(2;"Type";Code[20])
         {
         }
+        field(3; "MyDate"; DateTime)
+        {}
 
-        field(3;StatusOption;Option)
+        field(4;StatusOption;Option)
         {
             OptionMembers = Test1,Test2,Test3,Test4,Test5;
         }
