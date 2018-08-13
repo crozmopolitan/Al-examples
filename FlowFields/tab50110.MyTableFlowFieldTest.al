@@ -25,12 +25,12 @@ table 50110 MyTableFlowFieldTest
         field(5;DateFF;Boolean)
         {
             CaptionML=ENU='Date?',DEU='Date?';
-            //CalcFormula=exist(MyTestData where ("No." = field("No."), Type = field(Type), MyDate = filter (> field("MyDate"))));
-            //CalcFormula=exist(MyTestData where ("No." = field("No."), Type = field(Type), MyDate = field("MyDate")));
-            //CalcFormula=exist(MyTestData where (MyDate = field("MyDate")));
-            //CalcFormula=exist(MyTestData where (MyDate = filter (> field("MyDate"))));
             FieldClass=FlowField;
-            CalcFormula=exist(MyTestData where (MyDate >= field("MyDate"))));
+            //CalcFormula=exist(MyTestData where ("No." = field("No."), Type = field(Type), MyDate = filter (> field("MyDate"))));
+            CalcFormula=exist(MyTestData where ("No." = field("No."), Type = field(Type), MyDate = field("MyDate")));
+            //CalcFormula=exist(MyTestData where (MyDate = filter (> field("MyDate"))));
+            //CalcFormula=exist(MyTestData where (MyDate >= field("MyDate"))));
+            //CalcFormula=exist(MyTestData where (MyDate = field("MyDate")));
             Description='FlowField auf EXISTS (MyTestData)';
             Editable=false;
             NotBlank=true;
