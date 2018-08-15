@@ -50,7 +50,7 @@ page 50110 "Test FlowFields"
                     begin
                         Clear(testRec);
                         testRec."No." := format(i);
-                        testRec.Type := 'TEST';
+                        testRec.Type := testRec.Type::MyType;
                         case i of
                             1: testRec.StatusOption := testRec.StatusOption::Test1;
                             2: testRec.StatusOption := testRec.StatusOption::Test2;
@@ -70,7 +70,7 @@ page 50110 "Test FlowFields"
 
                     Clear(flowRec);
                     flowRec."No." := format(6);
-                    flowRec.Type := 'Test';
+                    flowRec.Type := testRec.Type::MyType;
                     flowRec.MyDate := CreateDateTime(DMY2Date(15,6,2017), 0T);
                     flowRec.Insert();
                 end;

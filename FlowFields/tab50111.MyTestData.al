@@ -6,9 +6,12 @@ table 50111 MyTestData
         {
         }
 
-        field(2;"Type";Code[20])
+        field(2;"Type";Option)
         {
+            OptionCaptionML=ENU='MyType',DEU='MeinTyp';
+            OptionMembers=MyType;
         }
+
         field(3; "MyDate"; DateTime)
         {}
 
@@ -21,7 +24,10 @@ table 50111 MyTestData
 
     keys
     {
-        key(pk; "No.", "Type")
+        key(pk; "No.")
+        {
+        }
+        key(typekey; "Type", "No.")
         {
         }
     }
