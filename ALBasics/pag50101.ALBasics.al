@@ -9,6 +9,7 @@ pageextension 50101 "Customer AL Basics" extends "Customer List"
         TestFormat();
         ParseToString();
         TestDate();
+        TestUnixTime();
         TestCallWithOption();
         TestCallWithVarParameter();
         TestFunctions();
@@ -123,6 +124,21 @@ pageextension 50101 "Customer AL Basics" extends "Customer List"
         begin
             Message('the dates are more than 21 days apart.');
         end;
+    end;
+
+    procedure TestUnixTime();
+    var
+        myCodeUnit: Codeunit myLibrary;
+        nowUnixTime: BigInteger;
+        FormatString: Text;
+        nowDateTime: DateTime;
+    begin
+        nowUnixTime := myCodeUnit.DateTimeToUnixTime(CurrentDateTime);
+        Message('to unixtime: ' + Format(nowUnixTime));
+        nowDateTime := myCodeUnit.UnixTimeToDateTime(nowUnixTime);
+        // formatting the date time to string
+        FormatString := '<Day,2>.<Month,2>.<Year4> <Hours24,2>:<Minutes,2>:<Seconds,2>.<Thousands,3>';
+        Message('from unixtime: ' + Format(nowDateTime, 0, FormatString));
     end;
 
     local procedure TestProcedureWithOption(myoption: Option testA, testB, testC);
