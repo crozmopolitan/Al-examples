@@ -130,8 +130,10 @@ pageextension 50101 "Customer AL Basics" extends "Customer List"
     var
         myCodeUnit: Codeunit myLibrary;
         nowUnixTime: BigInteger;
+        testUnixTime: BigInteger;
         FormatString: Text;
         nowDateTime: DateTime;
+        testDateTime: DateTime;
     begin
         nowUnixTime := myCodeUnit.DateTimeToUnixTime(CurrentDateTime);
         Message('to unixtime: ' + Format(nowUnixTime));
@@ -139,6 +141,13 @@ pageextension 50101 "Customer AL Basics" extends "Customer List"
         // formatting the date time to string
         FormatString := '<Day,2>.<Month,2>.<Year4> <Hours24,2>:<Minutes,2>:<Seconds,2>.<Thousands,3>';
         Message('from unixtime: ' + Format(nowDateTime, 0, FormatString));
+
+        testUnixTime := 1535407259;
+        testDateTime := myCodeUnit.UnixTimeToDateTime(testUnixTime);
+        Message('from unixtime across a day change: ' + Format(testDateTime, 0, FormatString) +
+            ' (should be: 28.08.2018 00:00:59)');
+        Message('to unixtime ' + Format(myCodeUnit.DateTimeToUnixTime(testDateTime)) +
+            ' (should be: ' + Format(testUnixTime) + ')');
     end;
 
     local procedure TestProcedureWithOption(myoption: Option testA, testB, testC);

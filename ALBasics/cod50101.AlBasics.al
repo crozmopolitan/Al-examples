@@ -5,31 +5,40 @@ codeunit 50101 MyLibrary
         Message('Hello World from the code unit!');
     end;
 
+    local procedure GetUTCOffset(): Integer;
+    var
+        lLocalTime: Time;
+        lUTCTime: Time;
+        lDateTimeTxt: Text;
+        lTimeTxt: Text;
+    begin
+        EVALUATE(lLocalTime, '17:00');
+        lDateTimeTxt := FORMAT(CREATEDATETIME(TODAY(), lLocalTime), 0, 9);
+        lTimeTxt := COPYSTR(lDateTimeTxt, STRPOS(lDateTimeTxt, 'T') + 1);
+        lTimeTxt := COPYSTR(lTimeTxt, 1, STRLEN(lTimeTxt) - 1);
+        EVALUATE(lUTCTime, lTimeTxt);
+        exit((lLocalTime - lUTCTime));
+    end;
+
     procedure UnixTimeToDateTime(unixtime: BigInteger): DateTime;
     var
         myDate: Date;
         myTime: Time;
         strTime: Text;
-        seconds: Integer;
-        minutes: Integer;
-        hours: Integer;
         days: Integer;
+        seconds: Integer;
     begin
-        seconds := unixtime mod 60;
-        unixtime := unixtime div 60;
-        minutes := unixtime mod 60;
-        unixtime := unixtime div 60;
-        hours := unixtime mod 24;
-        unixtime := unixtime div 24;
-        days := unixtime;
+        unixtime += GetUTCOffset()/1000;
+        days := unixtime div (60*60*24);
         myDate := DMY2DATE(1,1,1970);
         while (days > 0) do
         begin
             myDate := CalcDate('<+1D>', myDate);
             days -= 1;
         end;
-        strTime += Format(hours) + ':' + Format(minutes) + ':' + Format(seconds);
-        Evaluate(myTime, strTime);
+        seconds := unixtime mod (60*60*24);
+        myTime := 000000T;
+        myTime += seconds*1000;
         exit(CreateDateTime(myDate, myTime));
     end;
 
@@ -43,6 +52,7 @@ codeunit 50101 MyLibrary
         hours: Integer;
         days: Integer;
     begin
+        dt -= GetUTCOffset();
         myTime := DT2Time(dt);
         Evaluate(hours, Format(myTime, 0, '<Hours24,2>'));
         Evaluate(minutes, Format(myTime, 0, '<Minutes,2>'));
